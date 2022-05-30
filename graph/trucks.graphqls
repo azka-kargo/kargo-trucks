@@ -1,0 +1,37 @@
+type Truck {
+  id: ID!
+  plateNo: String!
+}
+type Shipment{
+    id: ID!
+  name: String!
+    origin: String!
+  destination: String!
+    deliveryDate: String!
+  truckId: String!
+}
+type Query{
+    paginatedTrucks(
+   id: String
+   plateNo: String
+
+  ):[Truck!]!
+
+  paginatedShipments(
+
+   page: Int
+   first: Int
+  ): [Shipment!]!
+}
+
+type Mutation{
+  saveTruck(id:ID, plateNo:String!):Truck!
+  saveShipment(
+   id: String
+   name: String!
+   origin: String!
+   destination: String!
+   deliveryDate: String!
+   truckId: String
+  ) : Shipment!
+}
