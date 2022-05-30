@@ -9,6 +9,7 @@ type Shipment{
   destination: String!
     deliveryDate: String!
   truckId: String!
+  truck:Truck,
 }
 type Query{
     paginatedTrucks(
@@ -32,6 +33,7 @@ type Mutation{
    origin: String!
    destination: String!
    deliveryDate: String!
-   truckId: String
+   truckId: ID
+
   ) : Shipment!
 }

@@ -27,7 +27,7 @@ func (r *mutationResolver) SaveShipment(ctx context.Context, id *string, name st
 		Origin:       origin,
 		Destination:  destination,
 		DeliveryDate: deliveryDate,
-		TruckID:      fmt.Sprintf("TRUCK-%d", len(r.Shipment)+1),
+		TruckID:      *id,
 	}
 	r.Shipment = append(r.Shipment, shipment)
 	return shipment, nil
