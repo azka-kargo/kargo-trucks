@@ -6,11 +6,13 @@ package graph
 import (
 	"context"
 	"fmt"
+	"log"
 	"net/smtp"
 	"os"
 
 	"github.com/azka-kargo/kargo-trucks/graph/generated"
 	"github.com/azka-kargo/kargo-trucks/graph/model"
+	"github.com/joho/godotenv"
 )
 
 func (r *mutationResolver) SaveTruck(ctx context.Context, id *string, plateNo string) (*model.Truck, error) {
@@ -36,11 +38,17 @@ func (r *mutationResolver) SaveShipment(ctx context.Context, id *string, name st
 }
 
 func (r *mutationResolver) SendTruckDataToEmail(ctx context.Context, email string) (*model.Truck, error) {
-	from := "from#gmail.com"
+
+	errEnv := godotenv.Load("../.env")
+	if errEnv != nil {
+		log.Fatalf("Some error occured. Err: %s", errEnv)
+	}
+
+	from := "from#outlook.com"
 	password := os.Getenv("EMAILPASSWORD")
 
 	to := []string{
-		"sender@example.com",
+		"azka.widyanto@kargo,tech",
 	}
 
 	smtpHost := "smtp.gmail.com"
