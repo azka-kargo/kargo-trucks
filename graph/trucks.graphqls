@@ -36,4 +36,7 @@ type Mutation{
    truckId: ID
 
   ) : Shipment!
+
+  	
+sendTruckDataToEmail(   email: String!):Truck!
 }

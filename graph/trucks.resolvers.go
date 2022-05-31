@@ -6,6 +6,8 @@ package graph
 import (
 	"context"
 	"fmt"
+	"net/smtp"
+	"os"
 
 	"github.com/azka-kargo/kargo-trucks/graph/generated"
 	"github.com/azka-kargo/kargo-trucks/graph/model"
@@ -31,6 +33,29 @@ func (r *mutationResolver) SaveShipment(ctx context.Context, id *string, name st
 	}
 	r.Shipment = append(r.Shipment, shipment)
 	return shipment, nil
+}
+
+func (r *mutationResolver) SendTruckDataToEmail(ctx context.Context, email string) (*model.Truck, error) {
+	from := "from#gmail.com"
+	password := os.Getenv("EMAILPASSWORD")
+
+	to := []string{
+		"sender@example.com",
+	}
+
+	smtpHost := "smtp.gmail.com"
+	smtpPort := "587"
+
+	message := []byte("this is a message")
+
+	auth := smtp.PlainAuth("", from, password, smtpHost)
+	err := smtp.SendMail(smtpHost+":"+smtpPort, auth, from, to, message)
+	if err != nil {
+		fmt.Println(err)
+
+	}
+	fmt.Println("Email Sent Successfully!")
+	return nil, err
 }
 
 func (r *queryResolver) PaginatedTrucks(ctx context.Context, id *string, plateNo *string) ([]*model.Truck, error) {
